@@ -22,6 +22,7 @@ import {
   Modality,
   Type,
 } from "@google/genai";
+import { useLocation } from "react-router-dom";
 
 const declaration: FunctionDeclaration = {
   name: "render_altair",
@@ -43,9 +44,11 @@ type AltairProps = {
   resumeContext?: string;
 };
 
-function AltairComponent({ resumeContext }: AltairProps) {
+function AltairComponent() {
   const [jsonString, setJSONString] = useState<string>("");
-  const { client, setConfig, setModel, config } = useLiveAPIContext();
+  const { client, setConfig, setModel } = useLiveAPIContext();
+  const location = useLocation();
+  const resumeContext = location.state?.resumeContext;
 
   useEffect(() => {
     setModel("models/gemini-2.0-flash-exp");
