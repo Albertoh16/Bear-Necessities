@@ -17,6 +17,8 @@
 import { useRef, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+import CompanyAbout from "./components/company-about/CompanyAbout";
+import CompanyInfoDisplayPage from "./components/company-about/CompanyInfoDisplayPage";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import { Altair } from "./components/altair/Altair";
 import ControlTray from "./components/control-tray/ControlTray";
@@ -74,6 +76,8 @@ function App() {
                   </>
                   }
                 />
+                <Route path="/about-company" element={<CompanyAbout />} />
+                <Route path="/about-company-info" element={<CompanyInfoDisplayPage />} />
               </Routes>
             </main>
           </div>
