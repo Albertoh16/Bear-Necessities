@@ -201,7 +201,7 @@
   }
 
   .side-panel .hidden {
-    @apply hidden;
+    display: none;
   }
 
   .side-panel.open .top h2 {
@@ -213,7 +213,8 @@
   }
 
   .side-panel .top h2 {
-    @apply relative text-neutral-90 text-[21px] font-medium leading-4 opacity-0 hidden -left-full transition-all duration-200 ease-in;
+    @apply relative text-neutral-90 text-[21px] font-medium leading-4 opacity-0 -left-full transition-all duration-200 ease-in;
+    display: none;
     font-family: "Google Sans";
     transition-behavior: allow-discrete;
   }
@@ -223,7 +224,8 @@
   }
 
   .side-panel:not(.open) .side-panel-container {
-    @apply opacity-0 hidden transition-all duration-200 ease-in delay-100;
+    @apply opacity-0 transition-all duration-200 ease-in delay-100;
+    display: none;
     transition-behavior: allow-discrete;
   }
 
@@ -236,7 +238,8 @@
   }
 
   .side-panel:not(.open) .input-container {
-    @apply opacity-0 hidden transition-all duration-200 ease-in;
+    @apply opacity-0 transition-all duration-200 ease-in;
+    display: none;
     transition-behavior: allow-discrete;
   }
 
