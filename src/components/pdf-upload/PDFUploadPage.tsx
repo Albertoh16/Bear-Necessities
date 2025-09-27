@@ -11,7 +11,7 @@ function PDFUploadPage() {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
-  const { setConfig } = useLiveAPIContext();
+  const { setConfig, config } = useLiveAPIContext(); // <-- get config
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files?.[0] || null);
@@ -37,8 +37,8 @@ function PDFUploadPage() {
       setLoading(false);
 
       // Update Altair systemInstruction
-      setConfig((prev: any) => ({
-        ...prev,
+      setConfig({
+        ...config,
         systemInstruction: {
           parts: [
             {
@@ -46,11 +46,11 @@ function PDFUploadPage() {
                 "PDF context: " +
                 text +
                 "\n\n" +
-                (prev?.systemInstruction?.parts?.[0]?.text || ""),
+                ((config as any)?.systemInstruction?.parts?.[0]?.text || ""),
             },
           ],
         },
-      }));
+      });
 
       // Navigate to Altair page
       navigate("/agent");
