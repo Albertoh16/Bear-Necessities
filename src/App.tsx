@@ -15,6 +15,8 @@
  */
 
 import { useRef, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PDFUploadPage from "./components/pdf-upload/PDFUploadPage";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import SidePanel from "./components/side-panel/SidePanel";
 import { Altair } from "./components/altair/Altair";
@@ -41,32 +43,17 @@ function App() {
   return (
     <div className="App">
       <LiveAPIProvider options={apiOptions}>
-        <div className="bg-neutral-15 text-gray-300 flex h-screen w-screen">
-          {/* <SidePanel /> */}
-          <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-hidden">
-            <div className="flex flex-1 items-center justify-center">
-              {/* APP goes here */}
-              <Altair />
-              <video
-                className={cn("flex-grow max-w-[90%] rounded-[32px] max-h-fit", {
-                  hidden: !videoRef.current || !videoStream,
-                })}
-                ref={videoRef}
-                autoPlay
-                playsInline
-              />
-            </div>
-
-            <ControlTray
-              videoRef={videoRef}
-              supportsVideo={true}
-              onVideoStreamChange={setVideoStream}
-              enableEditingSettings={false}
-            >
-              {/* put your own buttons here */}
-            </ControlTray>
-          </main>
-        </div>
+        <Router>
+          <div className="bg-neutral-15 text-gray-300 flex h-screen w-screen">
+            <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-hidden">
+              <Routes>
+                <Route path="/agent" element={<Altair />} />
+                <Route path="/pdf-upload" element={<PDFUploadPage />} />
+              </Routes>
+              {/* ...existing video and ControlTray code... */}
+            </main>
+          </div>
+        </Router>
       </LiveAPIProvider>
     </div>
   );
