@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDocument, GlobalWorkerOptions, version } from "pdfjs-dist";
-import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 
+// Set up PDF.js worker
 // @ts-ignore
 GlobalWorkerOptions.workerSrc = `${process.env.PUBLIC_URL}/pdf.worker.min.mjs`;
 
 function PDFUploadPage() {
-  const [pdfText, setPdfText] = useState<string>("");
+  const [pdfText, setPdfText] = useState("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
-  const { setConfig, config } = useLiveAPIContext(); // <-- get config
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(e.target.files?.[0] || null);
+    setFile(e.target.files?.[0] ?? null);
     setPdfText("");
   };
 
@@ -25,35 +24,20 @@ function PDFUploadPage() {
 
     const reader = new FileReader();
     reader.onload = async function () {
-      const typedarray = new Uint8Array(this.result as ArrayBuffer);
-      const pdf = await getDocument({ data: typedarray }).promise;
-      let text = "";
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
+      const arrayBuffer = this.result as ArrayBuffer;
+      const typedArray = new Uint8Array(arrayBuffer);
+      const pdfDoc = await getDocument({ data: typedArray }).promise;
+      let extractedText = "";
+      for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+        const page = await pdfDoc.getPage(pageNum);
         const content = await page.getTextContent();
-        text += content.items.map((item: any) => item.str).join(" ");
+        extractedText += content.items.map((item: any) => item.str).join(" ");
       }
-      setPdfText(text);
+      setPdfText(extractedText);
       setLoading(false);
 
-      // Update Altair systemInstruction
-      setConfig({
-        ...config,
-        systemInstruction: {
-          parts: [
-            {
-              text:
-                "PDF context: " +
-                text +
-                "\n\n" +
-                ((config as any)?.systemInstruction?.parts?.[0]?.text || ""),
-            },
-          ],
-        },
-      });
-
-      // Navigate to Altair page
-      navigate("/agent");
+      // Send resume context to Altair via navigation state
+      navigate("/agent", { state: { resumeContext: extractedText } });
     };
     reader.readAsArrayBuffer(file);
   };

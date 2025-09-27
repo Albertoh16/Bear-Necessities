@@ -39,12 +39,27 @@ const declaration: FunctionDeclaration = {
   },
 };
 
-function AltairComponent() {
+type AltairProps = {
+  resumeContext?: string;
+};
+
+function AltairComponent({ resumeContext }: AltairProps) {
   const [jsonString, setJSONString] = useState<string>("");
-  const { client, setConfig, setModel } = useLiveAPIContext();
+  const { client, setConfig, setModel, config } = useLiveAPIContext();
 
   useEffect(() => {
     setModel("models/gemini-2.0-flash-exp");
+    const baseText =
+      'I am someone interested in improving my job interviewing skills. '
+      + 'You are a helpful assistant that will help hone my skills by playing the part of an interview recuiter. '
+      + 'Any time I ask you or talk to you about subjects unreleated to either improving my interviewing skills, about the job / field I am interviewing for, or just unreleated to the context of interview prep, please try to redirect the conversation back to the subject of interviews. '
+      + 'If I keep going out of topic, please point this out to me. If this pattern repeats frequently, you may restart the entire conversation with the context of helping me with interview prep in mind. '
+      + 'Dont ask for additional information just make your best judgement.';
+
+    const instructionText = resumeContext
+      ? `${baseText}\n\nResume context: ${resumeContext}`
+      : baseText;
+
     setConfig({
       responseModalities: [Modality.AUDIO],
       speechConfig: {
@@ -53,11 +68,7 @@ function AltairComponent() {
       systemInstruction: {
         parts: [
           {
-            text: 'I am someone interested in improving my job interviewing skills. '
-            + 'You are a helpful assistant that will help hone my skills by playing the part of an interview recuiter. '
-            + 'Any time I ask you or talk to you about subjects unreleated to either improving my interviewing skills, about the job / field I am interviewing for, or just unreleated to the context of interview prep, please try to redirect the conversation back to the subject of interviews. '
-            + 'If I keep going out of topic, please point this out to me. If this pattern repeats frequently, you may restart the entire conversation with the context of helping me with interview prep in mind. '
-            + 'Dont ask for additional information just make your best judgement.',
+            text: instructionText,
           },
         ],
       },
@@ -66,7 +77,7 @@ function AltairComponent() {
         { functionDeclarations: [declaration] },
       ],
     });
-  }, [setConfig, setModel]);
+  }, [setConfig, setModel, resumeContext]);
 
   useEffect(() => {
     const onToolCall = (toolCall: LiveServerToolCall) => {
