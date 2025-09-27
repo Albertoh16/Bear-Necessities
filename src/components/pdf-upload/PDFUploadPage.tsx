@@ -4,7 +4,7 @@ import { getDocument, GlobalWorkerOptions, version } from "pdfjs-dist";
 import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
 
 // @ts-ignore
-GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
+GlobalWorkerOptions.workerSrc = `${process.env.PUBLIC_URL}/pdf.worker.min.mjs`;
 
 function PDFUploadPage() {
   const [pdfText, setPdfText] = useState<string>("");
