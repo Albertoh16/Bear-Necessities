@@ -15,7 +15,6 @@
  */
 
 import { useRef, useState } from "react";
-import "./App.scss";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import SidePanel from "./components/side-panel/SidePanel";
 import { Altair } from "./components/altair/Altair";
@@ -42,14 +41,14 @@ function App() {
   return (
     <div className="App">
       <LiveAPIProvider options={apiOptions}>
-        <div className="streaming-console">
+        <div className="bg-neutral-15 text-gray-300 flex h-screen w-screen">
           {/* <SidePanel /> */}
-          <main>
-            <div className="main-app-area">
+          <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-hidden">
+            <div className="flex flex-1 items-center justify-center">
               {/* APP goes here */}
               <Altair />
               <video
-                className={cn("stream", {
+                className={cn("flex-grow max-w-[90%] rounded-[32px] max-h-fit", {
                   hidden: !videoRef.current || !videoStream,
                 })}
                 ref={videoRef}

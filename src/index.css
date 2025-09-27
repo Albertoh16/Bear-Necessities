@@ -1,13 +1,308 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --volume: 5px;
+  }
+
+  body {
+    @apply m-0 font-space-mono antialiased bg-neutral-30;
+    -moz-osx-font-smoothing: grayscale;
+    scrollbar-color: theme('colors.gray-600') theme('colors.gray-900');
+    scrollbar-width: thin;
+  }
+
+  code {
+    @apply font-mono;
+  }
+
+  .material-symbols-outlined.filled {
+    font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer components {
+  @property --volume {
+    syntax: "length";
+    inherit: false;
+    initial-value: 0px;
+  }
+
+  .select-group {
+    @apply flex flex-col gap-1 h-[70px];
+  }
+
+  .select-group > label {
+    @apply text-[10px];
+  }
+
+  .action-button {
+    @apply flex items-center justify-center bg-neutral-20 text-neutral-60 text-xl leading-7 lowercase cursor-pointer transition-all duration-200 ease-in-out w-12 h-12 rounded-[18px] border border-transparent select-none;
+    animation: opacity-pulse 3s ease-in infinite;
+  }
+
+  .action-button:focus {
+    @apply border-2 border-neutral-20 outline-2 outline-neutral-80;
+  }
+
+  .action-button.outlined {
+    @apply bg-neutral-5 border border-neutral-20;
+  }
+
+  .action-button:hover {
+    @apply bg-transparent border border-neutral-20;
+  }
+
+  .action-button.connected {
+    @apply bg-blue-800 text-blue-500;
+  }
+
+  .action-button.connected:hover {
+    @apply border border-blue-500;
+  }
+
+  .mic-button {
+    @apply relative bg-accent-red z-10 text-black transition-all duration-200 ease-in;
+  }
+
+  .mic-button:focus {
+    @apply border-2 border-neutral-20 outline-2 outline-red-500;
+  }
+
+  .mic-button:hover {
+    @apply bg-red-400;
+  }
+
+  .mic-button:before {
+    content: "";
+    @apply absolute -z-10 block opacity-35 bg-red-500 rounded-[24px] transition-all duration-[20ms] ease-in-out;
+    top: calc(var(--volume) * -1);
+    left: calc(var(--volume) * -1);
+    width: calc(100% + var(--volume) * 2);
+    height: calc(100% + var(--volume) * 2);
+  }
+
+  .disabled .mic-button:before,
+  .mic-button.disabled:before {
+    @apply bg-transparent;
+  }
+
+  .connect-toggle:focus {
+    @apply border-2 border-neutral-20 outline-2 outline-neutral-80;
+  }
+
+  .connect-toggle:not(.connected) {
+    @apply bg-blue-500 text-neutral-5;
+  }
+
+  .logger {
+    @apply text-gray-300 w-full max-w-full block;
+  }
+
+  .logger-list {
+    @apply pr-0 pl-[25px] overflow-x-hidden w-[calc(100%-45px)];
+  }
+
+  .logger .user h4 {
+    @apply text-green-500;
+  }
+
+  .logger .model h4 {
+    @apply text-blue-500;
+  }
+
+  .logger .rich-log {
+    @apply flex justify-center gap-1 block;
+  }
+
+  .logger .rich-log pre {
+    @apply overflow-x-auto;
+  }
+
+  .logger .rich-log h4 {
+    @apply text-sm uppercase py-2 m-0;
+  }
+
+  .logger .rich-log h5 {
+    @apply m-0 pb-2 border-b border-neutral-20;
+  }
+
+  .logger .rich-log .part {
+    @apply bg-neutral-5 p-[14px] mb-1 text-neutral-90 rounded-lg;
+  }
+
+  .logger .plain-log > * {
+    @apply pr-1;
+  }
+
+  .logger .inline-code:not(:last-child) {
+    @apply italic;
+  }
+
+  .logger .inline-code:not(:last-child)::after {
+    content: ", ";
+  }
+
+  .logger li {
+    @apply block py-2 text-neutral-50 font-space-mono text-sm font-normal leading-normal;
+  }
+
+  .logger li .timestamp {
+    @apply w-[70px] flex-grow-0 flex-shrink-0 text-neutral-50;
+  }
+
+  .logger li .source {
+    @apply flex-shrink-0 font-bold;
+  }
+
+  .logger li.source-server,
+  .logger li.receive {
+    @apply text-blue-500;
+  }
+
+  .logger li.source-client,
+  .logger li.send:not(.source-server) {
+    @apply text-green-500;
+  }
+
+  .logger li .count {
+    @apply bg-neutral-5 text-xs px-[0.6em] py-[0.3em] leading-4 align-middle rounded-lg text-blue-500;
+  }
+
+  .logger li .message {
+    @apply flex-grow text-neutral-50;
+  }
+
+  .react-select {
+    @apply bg-neutral-20 text-neutral-90 w-[193px] h-[30px];
+  }
+
+  .react-select__single-value {
+    @apply text-neutral-90;
+  }
+
+  .react-select__menu {
+    @apply bg-neutral-20 text-neutral-90;
+  }
+
+  .react-select__option:hover,
+  .react-select__option:focus {
+    @apply bg-neutral-30;
+  }
+
+  .side-panel {
+    @apply bg-neutral-0 w-10 flex flex-col h-screen transition-all duration-200 ease-in font-sans border-r border-gray-600 text-neutral-90 font-space-mono text-[13px] font-normal leading-[160%];
+  }
+
+  .side-panel.open {
+    @apply w-[400px] h-screen;
+  }
+
+  .side-panel .hidden {
+    @apply hidden;
+  }
+
+  .side-panel.open .top h2 {
+    @apply left-0 block opacity-100;
+  }
+
+  .side-panel .top {
+    @apply flex w-[calc(100%-45px)] justify-between items-center px-5 py-3 pl-[25px] border-b border-neutral-20;
+  }
+
+  .side-panel .top h2 {
+    @apply relative text-neutral-90 text-[21px] font-medium leading-4 opacity-0 hidden -left-full transition-all duration-200 ease-in;
+    font-family: "Google Sans";
+    transition-behavior: allow-discrete;
+  }
+
+  .side-panel .opener {
+    @apply h-[30px] transition-transform duration-200 ease-in;
+  }
+
+  .side-panel:not(.open) .side-panel-container {
+    @apply opacity-0 hidden transition-all duration-200 ease-in delay-100;
+    transition-behavior: allow-discrete;
+  }
+
+  .side-panel:not(.open) .indicators .streaming-indicator {
+    @apply w-[30px] opacity-0;
+  }
+
+  .side-panel:not(.open) .opener {
+    @apply transform -translate-x-1/2 translate-y-0;
+  }
+
+  .side-panel:not(.open) .input-container {
+    @apply opacity-0 hidden transition-all duration-200 ease-in;
+    transition-behavior: allow-discrete;
+  }
+
+  .side-panel .indicators {
+    @apply flex px-[25px] py-6 justify-end gap-[21px];
+  }
+
+  .side-panel .streaming-indicator {
+    @apply select-none rounded border border-neutral-20 bg-neutral-10 flex w-[136px] h-[30px] pl-1 justify-center items-center gap-[6px] flex-shrink-0 text-center font-space-mono text-sm font-normal transition-all duration-200 ease-in;
+  }
+
+  .side-panel .streaming-indicator.connected {
+    @apply text-blue-500;
+  }
+
+  .side-panel .side-panel-container {
+    @apply self-end w-[400px] flex-grow overflow-x-hidden overflow-y-auto;
+  }
+
+  .side-panel .input-container {
+    @apply h-[50px] flex-grow-0 flex-shrink-0 border-t border-neutral-20 px-[25px] py-[14px] overflow-hidden;
+  }
+
+  .side-panel .input-content {
+    @apply relative bg-neutral-10 border border-neutral-15 h-[22px] rounded-[10px] px-[18px] py-[11px];
+  }
+
+  .side-panel .send-button {
+    @apply absolute top-1/2 right-0 transform translate-y-[-50%] bg-none border-0 text-neutral-20 cursor-pointer transition-colors duration-100 ease-in z-20;
+  }
+
+  .side-panel .send-button:hover {
+    @apply text-neutral-60;
+  }
+
+  .side-panel .input-area {
+    @apply bg-none text-neutral-90 absolute top-0 left-0 z-20 inline-block w-[calc(100%-72px)] max-h-5 outline-none flex-1 break-words overflow-auto px-[18px] py-[14px] border-0 resize-none;
+    field-sizing: content;
+  }
+
+  .side-panel .input-content-placeholder {
+    @apply absolute left-0 top-0 flex items-center z-10 h-full w-full pointer-events-none select-none px-[18px] whitespace-pre-wrap;
+  }
+
+  .side-panel-responses,
+  .side-panel-requests {
+    @apply flex-grow flex-shrink overflow-x-hidden overflow-y-auto w-full block ml-2;
+  }
+
+  .top {
+    @apply w-full flex-grow-0 flex-shrink-0 h-[30px] flex self-end items-center transition-all duration-200 ease-in;
+  }
+
+  .top button {
+    @apply bg-transparent border-0 cursor-pointer text-xl leading-7 p-1;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  @keyframes opacity-pulse {
+    0% { opacity: 0.9; }
+    50% { opacity: 1; }
+    100% { opacity: 0.9; }
+  }
 }

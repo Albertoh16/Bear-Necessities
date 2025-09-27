@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import "./audio-pulse.scss";
 import React from "react";
 import { useEffect, useRef } from "react";
 import c from "classnames";
@@ -49,13 +48,20 @@ export default function AudioPulse({ active, volume, hover }: AudioPulseProps) {
   }, [volume]);
 
   return (
-    <div className={c("audioPulse", { active, hover })}>
+    <div className={c("flex w-6 justify-evenly items-center h-1 transition-all duration-500", {
+      "opacity-100": active,
+      "opacity-50": !active
+    })}>
       {Array(lineCount)
         .fill(null)
         .map((_, i) => (
           <div
             key={i}
             ref={(el) => (lines.current[i] = el!)}
+            className={c("bg-neutral-30 rounded-full w-1 min-h-1 transition-all duration-100", {
+              "bg-neutral-80": active,
+              "animate-bounce": hover
+            })}
             style={{ animationDelay: `${i * 133}ms` }}
           />
         ))}

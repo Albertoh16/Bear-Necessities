@@ -23,7 +23,6 @@ import { useScreenCapture } from "../../hooks/use-screen-capture";
 import { useWebcam } from "../../hooks/use-webcam";
 import { AudioRecorder } from "../../lib/audio-recorder";
 import AudioPulse from "../audio-pulse/AudioPulse";
-import "./control-tray.scss";
 import SettingsDialog from "../settings-dialog/SettingsDialog";
 
 export type ControlTrayProps = {
@@ -160,9 +159,11 @@ function ControlTray({
   };
 
   return (
-    <section className="control-tray">
-      <canvas style={{ display: "none" }} ref={renderCanvasRef} />
-      <nav className={cn("actions-nav", { disabled: !connected })}>
+    <section className="absolute bottom-0 left-1/2 transform -translate-x-1/2 inline-flex justify-center items-start gap-2 pb-[18px]">
+      <canvas className="hidden" ref={renderCanvasRef} />
+      <nav className={cn("bg-neutral-5 border border-neutral-30 rounded-[27px] inline-flex gap-3 items-center overflow-hidden p-[10px] transition-all duration-600 ease-in", {
+        "opacity-50 pointer-events-none": !connected
+      })}>
         <button
           className={cn("action-button mic-button")}
           onClick={() => setMuted(!muted)}
@@ -174,7 +175,7 @@ function ControlTray({
           )}
         </button>
 
-        <div className="action-button no-action outlined">
+        <div className="action-button outlined pointer-events-none">
           <AudioPulse volume={volume} active={connected} hover={false} />
         </div>
 
@@ -199,8 +200,11 @@ function ControlTray({
         {children}
       </nav>
 
-      <div className={cn("connection-container", { connected })}>
-        <div className="connection-button-container">
+      <div className={cn("flex flex-col justify-center items-center gap-1", {
+        "opacity-100": connected,
+        "opacity-50": !connected
+      })}>
+        <div className="rounded-[27px] border border-neutral-30 bg-neutral-5 p-[10px]">
           <button
             ref={connectButtonRef}
             className={cn("action-button connect-toggle", { connected })}
@@ -211,7 +215,10 @@ function ControlTray({
             </span>
           </button>
         </div>
-        <span className="text-indicator">Streaming</span>
+        <span className={cn("text-[11px] text-blue-500 select-none", {
+          "opacity-100": connected,
+          "opacity-0": !connected
+        })}>Streaming</span>
       </div>
       {enableEditingSettings ? <SettingsDialog /> : ""}
     </section>
