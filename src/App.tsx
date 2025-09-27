@@ -47,10 +47,36 @@ function App() {
           <div className="bg-neutral-15 text-gray-300 flex h-screen w-screen">
             <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-hidden">
               <Routes>
-                <Route path="/agent" element={<Altair />} />
+                <Route
+                  path="/agent"
+                  element={
+                    <>
+                      <div className="flex flex-1 items-center justify-center">
+                        {/* APP goes here */}
+                        <Altair />
+                        <video
+                          className={cn("flex-grow max-w-[90%] rounded-[32px] max-h-fit", {
+                            hidden: !videoRef.current || !videoStream,
+                          })}
+                          ref={videoRef}
+                          autoPlay
+                          playsInline
+                        />
+                        </div>
+                      <ControlTray
+                        videoRef={videoRef}
+                        supportsVideo={true}
+                        onVideoStreamChange={setVideoStream}
+                        enableEditingSettings={false}
+                      >
+                      {/* put your own buttons here */}
+                    </ControlTray>
+                  </>
+                  }
+                />
                 <Route path="/pdf-upload" element={<PDFUploadPage />} />
               </Routes>
-              {/* ...existing video and ControlTray code... */}
+              {/* ...existing video code... */}
             </main>
           </div>
         </Router>
