@@ -62,7 +62,6 @@ function AltairComponent() {
         ],
       },
       tools: [
-        // there is a free-tier quota for search
         { googleSearch: {} },
         { functionDeclarations: [declaration] },
       ],
@@ -81,8 +80,6 @@ function AltairComponent() {
         const str = (fc.args as any).json_graph;
         setJSONString(str);
       }
-      // send data for the response of your tool call
-      // in this case Im just saying it was successful
       if (toolCall.functionCalls.length) {
         setTimeout(
           () =>
@@ -107,11 +104,23 @@ function AltairComponent() {
 
   useEffect(() => {
     if (embedRef.current && jsonString) {
-      console.log("jsonString", jsonString);
-      vegaEmbed(embedRef.current, JSON.parse(jsonString));
+      try {
+        vegaEmbed(embedRef.current, JSON.parse(jsonString));
+      } catch (e) {
+        // Optionally handle Vega errors here
+      }
     }
   }, [embedRef, jsonString]);
-  return <div className="vega-embed" ref={embedRef} />;
+
+  return (
+    <div className="vega-embed" ref={embedRef}>
+      {!jsonString && (
+        <div className="text-gray-400 text-center p-8">
+          No graph loaded yet. Interact with the agent to generate a graph.
+        </div>
+      )}
+    </div>
+  );
 }
 
 export const Altair = memo(AltairComponent);
