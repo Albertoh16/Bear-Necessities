@@ -1,126 +1,108 @@
-# Live API - Web Console
+# 🐻 PrepBear – AI Mock Interview Platform
 
-This repository contains a react-based starter app for using the [Live API](<[https://ai.google.dev/gemini-api](https://ai.google.dev/api/multimodal-live)>) over a websocket. It provides modules for streaming audio playback, recording user media such as from a microphone, webcam or screen capture as well as a unified log view to aid in development of your application.
+PrepBear is an AI-powered mock interview web application built on top of Google’s open-source Live API Web Console project. PrepBear helps students and job seekers practice behavioral and technical interviews tailored to specific job titles, companies, and their resumes.
 
-[![Live API Demo](readme/thumbnail.png)](https://www.youtube.com/watch?v=J_q7JY1XxFE)
+Users can upload their resume and specify the interview type, target role, and company. The AI then simulates a real-time mock interview, providing personalized, voice-based Q&A to help users prepare with confidence.
 
-Watch the demo of the Live API [here](https://www.youtube.com/watch?v=J_q7JY1XxFE).
+---
 
-## Usage
+## 🚀 Features
 
-To get started, [create a free Gemini API key](https://aistudio.google.com/apikey) and add it to the `.env` file. Then:
+- 🎤 **Real-time, voice-based mock interviews**
+- 🧠 **Interview types:** Technical and Behavioral
+- 🧾 **Tailored to your Resume, Job Title, and Company**
+- 🦜 **Built using Google’s Live API for low-latency streaming**
+- 🛠️ **Fully client-side React app**
+- 🏢 **Company Insight Page:** Research companies before your interview (see below)
 
-```
-$ npm install && npm start
-```
+---
 
-We have provided several example applications on other branches of this repository:
+## 📦 Installation & Usage
 
-- [demos/GenExplainer](https://github.com/google-gemini/multimodal-live-api-web-console/tree/demos/genexplainer)
-- [demos/GenWeather](https://github.com/google-gemini/multimodal-live-api-web-console/tree/demos/genweather)
-- [demos/GenList](https://github.com/google-gemini/multimodal-live-api-web-console/tree/demos/genlist)
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/Albertoh16/Bear-Necessities.git
+    cd Bear-Necessities
+    ```
+2. **Install Dependencies**
+    ```bash
+    npm install
+    ```
+3. **Set up Environment Variables**
 
-## Example
+    Create a `.env` file in the root of your project with your Gemini API key:
+    ```
+    REACT_APP_GEMINI_API_KEY=your_gemini_api_key_here
+    REACT_APP_TEXT_API=your_gemini_api_key_here
+    ```
 
-Below is an example of an entire application that will use Google Search grounding and then render graphs using [vega-embed](https://github.com/vega/vega-embed):
+4. **Run the App**
+    ```bash
+    npm start
+    ```
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```typescript
-import { type FunctionDeclaration, SchemaType } from "@google/generative-ai";
-import { useEffect, useRef, useState, memo } from "react";
-import vegaEmbed from "vega-embed";
-import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
+---
 
-export const declaration: FunctionDeclaration = {
-  name: "render_altair",
-  description: "Displays an altair graph in json format.",
-  parameters: {
-    type: SchemaType.OBJECT,
-    properties: {
-      json_graph: {
-        type: SchemaType.STRING,
-        description:
-          "JSON STRING representation of the graph to render. Must be a string, not a json object",
-      },
-    },
-    required: ["json_graph"],
-  },
-};
+## 🧪 How It Works
 
-export function Altair() {
-  const [jsonString, setJSONString] = useState<string>("");
-  const { client, setConfig } = useLiveAPIContext();
+1. User lands on the Launch Page.
+2. They enter:
+    - 🎯 **Interview Type:** Technical or Behavioral
+    - 💼 **Job Title**
+    - 🏢 **Company Name**
+    - 📄 **Resume (PDF Upload)**
+3. The app passes this data to the Gemini-powered backend via WebSocket (Google Live API).
+4. The AI dynamically simulates an interview session based on the inputs.
+5. Users can respond via voice, and the model listens and adapts in real-time.
 
-  useEffect(() => {
-    setConfig({
-      model: "models/gemini-2.0-flash-exp",
-      systemInstruction: {
-        parts: [
-          {
-            text: 'You are my helpful assistant. Any time I ask you for a graph call the "render_altair" function I have provided you. Dont ask for additional information just make your best judgement.',
-          },
-        ],
-      },
-      tools: [{ googleSearch: {} }, { functionDeclarations: [declaration] }],
-    });
-  }, [setConfig]);
+---
 
-  useEffect(() => {
-    const onToolCall = (toolCall: ToolCall) => {
-      console.log(`got toolcall`, toolCall);
-      const fc = toolCall.functionCalls.find(
-        (fc) => fc.name === declaration.name
-      );
-      if (fc) {
-        const str = (fc.args as any).json_graph;
-        setJSONString(str);
-      }
-    };
-    client.on("toolcall", onToolCall);
-    return () => {
-      client.off("toolcall", onToolCall);
-    };
-  }, [client]);
+## 🏢 Company Insight Page
 
-  const embedRef = useRef<HTMLDivElement>(null);
+PrepBear includes a dedicated **Company Insight** page to help users research companies before conducting their interview session with our AI agent.
 
-  useEffect(() => {
-    if (embedRef.current && jsonString) {
-      vegaEmbed(embedRef.current, JSON.parse(jsonString));
-    }
-  }, [embedRef, jsonString]);
-  return <div className="vega-embed" ref={embedRef} />;
-}
-```
+**Features:**
+- Get detailed insights about a given company.
+- Review company background, culture, recent news, and interview tips.
+- Use this information to better tailor your interview preparation and responses.
 
-## development
+This feature empowers students and job seekers to make informed decisions and approach interviews with confidence.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Project consists of:
+---
 
-- an Event-emitting websocket-client to ease communication between the websocket and the front-end
-- communication layer for processing audio in and out
-- a boilerplate view for starting to build your apps and view logs
+## 🛠 Tech Stack
 
-## Available Scripts
+- **React (Vite)**
+- **Google Live API** (WebSocket-based audio streaming)
+- **Gemini 1.5 API** (for conversation + function calls)
+- **Web Audio API & MediaRecorder**
+- **VegaEmbed** (optional, for future visualization features)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🧾 Original Project Citation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+PrepBear is built upon Google’s experimental open-source project:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [Google Live API – Web Console](https://github.com/google/generative-ai-live-api-web)
 
-### `npm run build`
+This is an experiment showcasing the Live API, not an official Google product.  
+Please respect copyright and trademark rights when sharing or creating derivative works.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🧰 Available Scripts
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Script           | Description                        |
+|------------------|------------------------------------|
+| `npm start`      | Runs the app in development mode    |
+| `npm run build`  | Builds the app for production       |
 
-_This is an experiment showcasing the Live API, not an official Google product. We’ll do our best to support and maintain this experiment but your mileage may vary. We encourage open sourcing projects as a way of learning from each other. Please respect our and other creators' rights, including copyright and trademark rights when present, when sharing these works and creating derivative work. If you want more info on Google's policy, you can find that [here](https://developers.google.com/terms/site-policies)._
+---
+
+## 📄 License
+
+This project is a derivative work based on Google's open-source Live API Web Console. See their license for more details.
+
+All additional modifications and features in PrepBear are released under the MIT License.
