@@ -22,6 +22,7 @@ import CompanyInfoDisplayPage from "./components/company-about/CompanyInfoDispla
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import { Altair } from "./components/altair/Altair";
 import ControlTray from "./components/control-tray/ControlTray";
+import Navbar from "./components/navbar/Navbar";
 import cn from "classnames";
 import { LiveClientOptions } from "./types";
 
@@ -45,7 +46,8 @@ function App() {
     <div className="App">
       <LiveAPIProvider options={apiOptions}>
         <Router>
-          <div className="bg-neutral-15 text-gray-300 flex h-screen w-screen">
+          <div className="bg-neutral-15 text-gray-300 flex flex-col h-screen w-screen">
+            <Navbar />
             <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-hidden">
               <Routes>
                 <Route path="/" element={<LandingPage />} />
