@@ -89,12 +89,25 @@
     @apply bg-transparent;
   }
 
-  .connect-toggle:focus {
-    @apply border-2 border-neutral-20 outline-2 outline-neutral-80;
+  .interview-button {
+    @apply px-6 py-3 bg-blue-500 text-white font-medium rounded-lg border-0 cursor-pointer transition-all duration-200 ease-in-out;
+    min-width: 140px;
   }
 
-  .connect-toggle:not(.connected) {
-    @apply bg-blue-500 text-neutral-5;
+  .interview-button:hover {
+    @apply bg-blue-600;
+  }
+
+  .interview-button.connected {
+    @apply bg-red-500;
+  }
+
+  .interview-button.connected:hover {
+    @apply bg-red-600;
+  }
+
+  .interview-button:focus {
+    @apply outline-2 outline-blue-300 outline-offset-2;
   }
 
   .logger {
