@@ -25,6 +25,7 @@ import ControlTray from "./components/control-tray/ControlTray";
 import Navbar from "./components/navbar/Navbar";
 import cn from "classnames";
 import { LiveClientOptions } from "./types";
+import SidePanel from "./components/side-panel/SidePanel";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -66,15 +67,16 @@ function App() {
                           autoPlay
                           playsInline
                         />
-                        </div>
+                      </div>
                       <ControlTray
                         videoRef={videoRef}
                         supportsVideo={true}
                         onVideoStreamChange={setVideoStream}
                         enableEditingSettings={false}
                       >
-                      {/* put your own buttons here */}
-                    </ControlTray>
+                        {/* Place more buttons here */}
+                      </ControlTray>
+                      {/* <SidePanel /> */}
                   </>
                   }
                 />
