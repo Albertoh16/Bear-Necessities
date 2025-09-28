@@ -16,9 +16,8 @@
 
 import { useRef, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PDFUploadPage from "./components/pdf-upload/PDFUploadPage";
+import LandingPage from "./pages/LandingPage";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
-import SidePanel from "./components/side-panel/SidePanel";
 import { Altair } from "./components/altair/Altair";
 import ControlTray from "./components/control-tray/ControlTray";
 import cn from "classnames";
@@ -47,6 +46,7 @@ function App() {
           <div className="bg-neutral-15 text-gray-300 flex h-screen w-screen">
             <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-hidden">
               <Routes>
+                <Route path="/" element={<LandingPage />} />
                 <Route
                   path="/agent"
                   element={
@@ -74,9 +74,7 @@ function App() {
                   </>
                   }
                 />
-                <Route path="/pdf-upload" element={<PDFUploadPage />} />
               </Routes>
-              {/* ...existing video code... */}
             </main>
           </div>
         </Router>
