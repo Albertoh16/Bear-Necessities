@@ -17,14 +17,16 @@ export async function fetchCompanyInfoFromLink(
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: `Find the History, values and work environment of the company from the provided link ${link}. 
-      Return this information in a JSON format such as:
-      {
-        "CompanyName": "",
-        "History": "",
-        "Values": "",
-        "Environment": ""
-      }`,
+      contents: `You are an API that outputs only raw JSON. 
+    Extract the following information from the company website: ${link}.
+
+    Return ONLY a JSON object with this exact structure (no extra text, no markdown):
+    {
+      "CompanyName": "",
+      "History": "",
+      "Values": "",
+      "Environment": ""
+    }`,
     });
 
     const textResponse = response?.text || "";
