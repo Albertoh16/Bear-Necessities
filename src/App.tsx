@@ -48,9 +48,9 @@ function App() {
     <div className="App">
       <LiveAPIProvider options={apiOptions}>
         <Router>
-          <div className="bg-neutral-15 text-gray-300 flex flex-col h-screen w-screen">
+          <div className="bg-blue-200 text-gray-300 flex flex-col h-screen w-screen">
             <Navbar />
-            <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-hidden">
+            <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-y-auto">
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route
