@@ -71,7 +71,7 @@ function AltairComponent() {
       + 'If the user tries to continue the conversation after this point, please remind them that the interview session has ended and provide a summary of the key points and feedback. '
       + 'Make sure to provide feedback in a constructive manner, highlighting both strengths and areas for improvement. ';
     
-    baseText = `You are an experienced ${interviewType || 'interview'} interviewer conducting a practice interview session. `;
+    baseText += `You are an experienced ${interviewType || 'interview'} interviewer conducting a practice interview session. `;
     
     if (jobRole && company) {
       baseText += `The candidate is interviewing for a ${jobRole} position at ${company}. `;
