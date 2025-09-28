@@ -17,7 +17,7 @@ function CompanyInfoPage(): JSX.Element {
     setLoading(false);
 
     if (data) {
-      // 🚀 Navigate to results page and pass company info in state
+      
       navigate("/about-company-info", { state: { companyInfo: data } });
     }
   };
