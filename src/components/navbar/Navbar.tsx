@@ -27,7 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
 
   const navItems = [
     { path: "/", label: "Home" },
-    { path: "/about-company", label: "Company Background Search" },
+    { path: "/about-company", label: "Company Insights" },
   ];
 
   return (
