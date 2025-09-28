@@ -53,7 +53,22 @@ class AudioProcessingWorklet extends AudioWorkletProcessor {
 
   processChunk(float32Array) {
     const l = float32Array.length;
-    
+
+    // Calculate RMS (volume)
+    let sum = 0;
+    for (let i = 0; i < l; i++) {
+      sum += float32Array[i] * float32Array[i];
+    }
+    const rms = Math.sqrt(sum / l);
+
+    // Set your desired threshold (e.g., 0.02)
+    const VOLUME_THRESHOLD = 0.50;
+
+    if (rms < VOLUME_THRESHOLD) {
+      // Ignore quiet chunks
+      return;
+    }
+
     for (let i = 0; i < l; i++) {
       // convert float32 -1 to 1 to int16 -32768 to 32767
       const int16Value = float32Array[i] * 32768;
