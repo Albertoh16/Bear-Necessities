@@ -19,6 +19,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import CompanyAbout from "./components/company-about/CompanyAbout";
 import CompanyInfoDisplayPage from "./components/company-about/CompanyInfoDisplayPage";
+import Quiz from "./components/quizs/quiz";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import { Altair } from "./components/altair/Altair";
 import ControlTray from "./components/control-tray/ControlTray";
@@ -80,6 +81,7 @@ function App() {
                 />
                 <Route path="/about-company" element={<CompanyAbout />} />
                 <Route path="/about-company-info" element={<CompanyInfoDisplayPage />} />
+                <Route path="/quiz" element={<Quiz />} />
               </Routes>
             </main>
           </div>
