@@ -69,7 +69,7 @@ function App() {
                         videoRef={videoRef}
                         supportsVideo={true}
                         onVideoStreamChange={setVideoStream}
-                        enableEditingSettings={false}
+                        enableEditingSettings={true}
                       >
                       {/* put your own buttons here */}
                     </ControlTray>

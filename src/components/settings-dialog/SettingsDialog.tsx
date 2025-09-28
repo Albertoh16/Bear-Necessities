@@ -100,7 +100,7 @@ export default function SettingsDialog() {
         settings
       </button>
       <dialog
-        className={cn("font-space-mono bg-neutral-5 rounded-[18px] text-neutral-80 border-0 p-0 m-0 fixed -top-[400px] right-0 w-[696px] h-[593px] transform translate-x-[-25%] translate-y-[-50%]", {
+        className={cn("font-space-mono bg-neutral-5 rounded-[18px] text-neutral-80 border-0 p-0 m-0 fixed -top-[400px] right-0 w- h- transform translate-x-[-25%] translate-y-[-50%]", {
           "block": open,
           "hidden": !open
         })}
@@ -114,18 +114,18 @@ export default function SettingsDialog() {
               </p>
             </div>
           )}
-          <div className="flex gap-4 py-2">
-            <ResponseModalitySelector />
+          <div className="flex items-center mb-6">
+            {/* <ResponseModalitySelector /> */}
             <VoiceSelector />
           </div>
 
-          <h3 className="ml-1 mb-[10px]">System Instructions</h3>
+          {/* <h3 className="ml-1 mb-[10px]">System Instructions</h3>
           <textarea
             className="rounded-[12px] bg-neutral-15 text-neutral-80 mt-2 font-sans leading-[21px] text-base w-[calc(100%-16px)] min-h-[150px] h-[150px] p-2 border-0 resize-y box-border"
             onChange={updateConfig}
             value={systemInstruction}
-          />
-          <h4 className="ml-1 mb-[10px]">Function declarations</h4>
+          /> */}
+          {/* <h4 className="ml-1 mb-[10px]">Function declarations</h4>
           <div className="text-[10px] w-full">
             <div className="grid grid-cols-[1fr_0.5fr_1.5fr] gap-y-[6px]">
               {functionDeclarations.map((fd, fdKey) => (
@@ -150,7 +150,7 @@ export default function SettingsDialog() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </dialog>
     </div>

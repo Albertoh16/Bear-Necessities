@@ -44,7 +44,7 @@ export default function VoiceSelector() {
 
   return (
     <div className="select-group">
-      <label htmlFor="voice-selector">Voice</label>
+      <label htmlFor="voice-selector" style={{ color: "#000" }}>Voice</label>
       <Select
         id="voice-selector"
         className="react-select"
@@ -52,11 +52,19 @@ export default function VoiceSelector() {
         styles={{
           control: (baseStyles) => ({
             ...baseStyles,
-            background: "var(--Neutral-15)",
-            color: "var(--Neutral-90)",
+            background: "#fff",
+            color: "#000",
             minHeight: "33px",
             maxHeight: "33px",
             border: 0,
+          }),
+          singleValue: (base) => ({
+            ...base,
+            color: "#000",
+          }),
+          input: (base) => ({
+            ...base,
+            color: "#000",
           }),
           option: (styles, { isFocused, isSelected }) => ({
             ...styles,
@@ -65,6 +73,17 @@ export default function VoiceSelector() {
               : isSelected
               ? "var(--Neutral-20)"
               : undefined,
+            color: "#000",
+          }),
+          menu: (base) => ({
+            ...base,
+            width: 260, // Make dropdown longer
+          }),
+          menuList: (base) => ({
+            ...base,
+            background: "#fff",
+            paddingRight: 0,
+            height: "500px !important", // Increase to show more options before scrolling
           }),
         }}
         value={selectedOption}
@@ -76,6 +95,8 @@ export default function VoiceSelector() {
             updateConfig(e.value);
           }
         }}
+        menuPlacement="auto"
+        menuShouldScrollIntoView={false}
       />
     </div>
   );
