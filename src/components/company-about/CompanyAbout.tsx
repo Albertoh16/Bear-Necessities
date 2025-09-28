@@ -38,7 +38,8 @@ function CompanyInfoPage(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-20 px-4 sm:px-6 lg:px-8">
+    <div className="h-screen flex items-center justify-center">
+      <div className="h-4/5 bg-gradient-to-br from-blue-50 to-indigo-100 py-20 px-4 sm:px-6 lg:px-8 border-2 border-black shadow-xl">
       <div className="max-w-md mx-auto">
         <div className="text-center mb-8">
           <div className="mx-auto h-12 w-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
@@ -119,6 +120,7 @@ function CompanyInfoPage(): JSX.Element {
             </div>
           </CardFooter>
         </Card>
+      </div>
       </div>
     </div>
   );

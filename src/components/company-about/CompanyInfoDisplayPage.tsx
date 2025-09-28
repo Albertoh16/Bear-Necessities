@@ -11,7 +11,8 @@ function CompanyInfoDisplayPage(): JSX.Element {
 
   if (!companyInfo) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center px-4">
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="min-h-[80vh] bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center px-4">
         <Card variant="elevated" className="max-w-md w-full text-center">
           <CardContent>
             <div className="mx-auto h-16 w-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
@@ -27,13 +28,15 @@ function CompanyInfoDisplayPage(): JSX.Element {
             </Button>
           </CardContent>
         </Card>
+        </div>
       </div>
     );
   }
 
   if ("raw" in companyInfo) {
     return (
-      <div className="min-h-screen w-full bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="min-h-[80vh] w-full bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <Card variant="elevated" className="overflow-hidden">
             <div className="bg-gradient-to-r from-green-600 to-blue-600 px-6 py-4">
@@ -58,12 +61,14 @@ function CompanyInfoDisplayPage(): JSX.Element {
             </CardContent>
           </Card>
         </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center mt-[450px]">
+      <div className="min-h-[80vh] w-full bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <Card variant="elevated" className="overflow-hidden">
           <div className="bg-gradient-to-r from-green-600 to-blue-600 px-6 py-8 text-center">
@@ -74,7 +79,7 @@ function CompanyInfoDisplayPage(): JSX.Element {
           </div>
 
           <CardContent className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 mt-5">
               <div className="text-center">
                 <div className="mx-auto h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
                   <FiClock className="h-6 w-6 text-blue-600" />
@@ -154,6 +159,7 @@ function CompanyInfoDisplayPage(): JSX.Element {
             </div>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );

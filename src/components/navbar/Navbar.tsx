@@ -44,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
               to="/"
               className="text-xl font-bold text-gray-300 hover:text-white transition-colors"
             >
-              PrepBear
+              Prep<span className="text-green-600">Bear</span>
             </Link>
           </div>
 
