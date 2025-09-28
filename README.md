@@ -5,7 +5,7 @@ PrepBear is an AI-powered mock interview web application built on top of Googleâ
 Users can upload their resume and specify the interview type, target role, and company. The AI then simulates a real-time mock interview, providing personalized, voice-based Q&A to help users prepare with confidence.
 
 ---
-# demo
+## Demo
 [![Watch the demo](https://img.youtube.com/vi/uNDWa84R2Aw/0.jpg)](https://youtu.be/uNDWa84R2Aw)
 
 ## ðŸš€ Features
