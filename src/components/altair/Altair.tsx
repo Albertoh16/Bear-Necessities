@@ -154,11 +154,6 @@ function AltairComponent() {
 
   return (
     <div className="vega-embed" ref={embedRef}>
-      {!jsonString && (
-        <div className="text-gray-400 text-center p-8">
-          No graph loaded yet. Interact with the agent to generate a graph.
-        </div>
-      )}
     </div>
   );
 }
